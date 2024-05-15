@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using Api.Middleware;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -23,5 +24,9 @@ public static class ApplicationBuilderExtensions
                 logger.LogError(ex, "Error en migracion");
             }
         }
+    }
+    public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+    {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
     }
 }

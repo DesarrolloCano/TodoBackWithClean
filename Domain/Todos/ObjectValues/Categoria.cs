@@ -20,7 +20,7 @@ public record  Categoria
     public static Categoria FromCodigo(string codigo)
     {
         return All.FirstOrDefault(c => c.Codigo == codigo) ??
-            throw new ApplicationException("La categoria no existe");
+            throw new Exception("La categoria no existe");
     }
 }
 

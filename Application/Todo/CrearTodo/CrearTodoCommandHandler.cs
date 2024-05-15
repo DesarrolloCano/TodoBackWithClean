@@ -1,6 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
 using Domain.Abstractions;
 using Domain.Todos;
+using Domain.Todos.Enums;
+using Domain.Todos.ObjectValues;
 using Domain.Todos.Repository;
 
 namespace Application.Todo.CrearTodo;
@@ -17,17 +19,22 @@ internal sealed class CrearTodoCommandHandler : ICommandHandler<CrearTodoCommand
 
     public async Task<Result<Guid>> Handle(CrearTodoCommand request, CancellationToken cancellationToken)
     {
-        try
-        {
-            var todo = Domain.Todos.Todo.CrearTodo(request.Titulo, request.descripcion, request.FechaVencimiento, request.prioridad, request.Categoria, request.UserId);
-            repository.Add(todo);
-            await _unitOfWork.SaveChangesAsync();
-            return todo.Id;
-        }
-        catch (Exception ex)
-        {
+        if (!Enum.IsDefined(typeof(TodoPrioridad), request.prioridad)) return Result.Failure<Guid>(TodoErros.ErrorPrioridad);
 
-            throw;
-        }
+        var categoria = Categoria.All.FirstOrDefault(x => x.Codigo == request.Categoria);
+        if (categoria is null) return Result.Failure<Guid>(TodoErros.ErrorCategoria);
+
+        var todo = Domain.Todos.Todo.CrearTodo(
+            request.Titulo,
+            request.descripcion,
+            request.FechaVencimiento,
+            request.prioridad,
+            categoria,
+            request.UserId
+            );
+
+        repository.Add(todo);
+        await _unitOfWork.SaveChangesAsync();
+        return todo.Id;
     }
 }

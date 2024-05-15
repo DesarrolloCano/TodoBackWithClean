@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions;
+﻿using Application.Exceptions;
+using Domain.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -34,7 +35,7 @@ namespace Infrastructure
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                //throw new ConcurrencyException("La excepcion por concurrencia se disparo", ex);
+                throw new ConcurrencyException("La excepcion por concurrencia se disparo", ex);
                 throw new Exception(ex.Message);
             }
 

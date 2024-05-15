@@ -1,11 +1,13 @@
 ﻿using Application.Todo;
 using Application.Todo.CrearTodo;
 using Application.Todo.ObtenerTodos;
+using Domain.Abstractions;
+using Domain.Todos;
 using Domain.Todos.Enums;
 using Domain.Todos.ObjectValues;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 
 namespace Api.Controllers
 {
@@ -23,10 +25,12 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CrearTodo(CrearTodoRequest crearTodoRequest, CancellationToken cancellationToken)
         {
+            
+
             var titulo = new Titulo(crearTodoRequest.Titulo);
             var descripcion = new Descripcion(crearTodoRequest.Descripcion);
             var prioridad = (TodoPrioridad)crearTodoRequest.prioridad;
-            var categoria = Categoria.FromCodigo(crearTodoRequest.Categoria);
+            var categoria = crearTodoRequest.Categoria;
             var todoCommand = new CrearTodoCommand(titulo, descripcion, crearTodoRequest.FechaVencimiento, prioridad, categoria, crearTodoRequest.UserId);
 
             var resultado = await _sender.Send(todoCommand, cancellationToken);
