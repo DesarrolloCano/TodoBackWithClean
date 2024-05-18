@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Messaging;
 using Application.Data;
+using Application.Dtos;
 using Dapper;
 using Domain.Abstractions;
 

@@ -1,4 +1,6 @@
 ﻿using Application.Abstractions.Behaviors;
+using Application.Todo.ActualizarEstadoTodo;
+using Application.Todo.ObtenerTodos;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 

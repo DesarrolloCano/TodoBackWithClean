@@ -1,6 +1,5 @@
-﻿
+﻿namespace Application.Dtos;
 
-namespace Application.Todo.ObtenerTodos;
 
 public sealed class ObtenerTodosResponse
 {

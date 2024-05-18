@@ -1,5 +1,4 @@
 ﻿using Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -17,5 +16,15 @@ where T : Entity
     public void Add(T entity)
     {
         DbContext.Add(entity);
+    }
+
+    public void Update(T entity)
+    {
+        DbContext.Update(entity);
+    }
+
+    public void Delete(T entity)
+    {
+        DbContext.Remove(entity);
     }
 }
