@@ -1,11 +1,13 @@
 using Api.Extensions;
 using Application;
 using Infrastructure;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000); // Configurar para escuchar en todas las interfaces en el puerto 5000
+});
 
 // Configurar servicios
 builder.Services.AddControllers();
