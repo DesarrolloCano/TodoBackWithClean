@@ -57,7 +57,7 @@ namespace Api.Controllers
         {
             var command = new ActualizarEstadoTodoCommand(request.Estado, request.UserId, request.TodoId);
             var resultado = await _sender.Send(command, cancellationToken);
-            return !resultado.IsFailure ? Ok(resultado.Value) : BadRequest(resultado.Error);
+            return !resultado.IsFailure ? Ok(resultado) : BadRequest(resultado);
         }
 
         [HttpDelete("DeleteTodo{id}/{idUser}")]
