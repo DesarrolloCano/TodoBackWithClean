@@ -38,7 +38,7 @@ namespace Api.Controllers
 
             if (resultado.IsFailure)
             {
-                return BadRequest(resultado.Error);
+                return BadRequest(resultado);
             }
 
             return Ok(resultado);
@@ -49,7 +49,7 @@ namespace Api.Controllers
         {
             var query = new ObtenerTodosQuery(id);
             var resultado = await _sender.Send(query, cancellationToken);
-            return resultado.IsSuccess ? Ok(resultado.Value) : NotFound();
+            return resultado.IsSuccess ? Ok(resultado) : NotFound(resultado);
         }
 
         [HttpPost("ActualizarEstadoTodo")]
@@ -65,7 +65,7 @@ namespace Api.Controllers
         {
             var command = new DeleteTodoCommand(id, idUser);
             var resultado = await _sender.Send(command, cancellationToken);
-            return Ok(resultado.Value);
+            return Ok(resultado);
         }
 
     }
